@@ -1,8 +1,26 @@
+import "dotenv/config";
 import { PrismaClient } from "@prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
 import fs from "fs";
 import path from "path";
 
-const prisma = new PrismaClient();
+// ⚠️ Αν δεν έχεις DIRECT_URL ή DATABASE_URL, δεν γίνεται σύνδεση
+if (!process.env.DIRECT_URL && !process.env.DATABASE_URL) {
+  throw new Error("Missing DIRECT_URL (preferred) or DATABASE_URL");
+}
+
+// Προτίμησε DIRECT_URL (5432) για scripts / migrations
+const connectionString = process.env.DIRECT_URL ?? process.env.DATABASE_URL;
+
+// ⚠️ Προσωρινό fix για dev αν έχεις TLS error (self-signed certificate)
+// ΜΟΝΟ για development!
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
+const adapter = new PrismaPg({
+  connectionString,
+});
+
+const prisma = new PrismaClient({ adapter });
 
 const seedDataDir = path.join(process.cwd(), "seed-data");
 
@@ -76,18 +94,27 @@ async function importDemoData() {
       if (!data || data.length === 0) continue;
 
       const modelName = fileName.replace(".json", "").toLowerCase();
-      const prismaModel = (prisma)[modelName];
-      console.log(modelName, 'modelName')
+      const prismaModel = prisma[modelName];
+
+      console.log(modelName, "modelName");
+
       if (prismaModel) {
         console.log(`📥 Importing ${modelName}...`);
 
         // Format date fields
         data.forEach((item) => {
-          if (item.countdownDate) item.countdownDate = new Date(item.countdownDate).toISOString();
-          if (item.createdAt) item.createdAt = new Date(item.createdAt).toISOString();
-          if (item.updatedAt) item.updatedAt = new Date(item.updatedAt).toISOString();
-          if (item.emailVerified) item.emailVerified = new Date(item.emailVerified).toISOString();
-          if (item.passwordResetTokenExp) item.passwordResetTokenExp = new Date(item.passwordResetTokenExp).toISOString();
+          if (item.countdownDate)
+            item.countdownDate = new Date(item.countdownDate).toISOString();
+          if (item.createdAt)
+            item.createdAt = new Date(item.createdAt).toISOString();
+          if (item.updatedAt)
+            item.updatedAt = new Date(item.updatedAt).toISOString();
+          if (item.emailVerified)
+            item.emailVerified = new Date(item.emailVerified).toISOString();
+          if (item.passwordResetTokenExp)
+            item.passwordResetTokenExp = new Date(
+              item.passwordResetTokenExp
+            ).toISOString();
           if (item.expires) item.expires = new Date(item.expires).toISOString();
         });
 
@@ -101,6 +128,7 @@ async function importDemoData() {
     console.log("📥 Importing product variant...");
     const productVariants = loadJSON("ProductVariant.json");
     await prisma.productVariant.createMany({ data: productVariants });
+
     // additionalInformation
     console.log("📥 Importing additionalInformation...");
     const additionalInformation = loadJSON("AdditionalInformation.json");
@@ -110,32 +138,39 @@ async function importDemoData() {
     console.log("📥 Importing customAttribute...");
     const customAttribute = loadJSON("CustomAttribute.json");
     await prisma.customAttribute.createMany({ data: customAttribute });
+
     // attributeValue
     console.log("📥 Importing attributeValue...");
     const attributeValue = loadJSON("AttributeValue.json");
     await prisma.attributeValue.createMany({ data: attributeValue });
+
     // heroBanner
     console.log("📥 Importing heroBanner...");
     const heroBanners = loadJSON("HeroBanner.json");
     await prisma.heroBanner.createMany({ data: heroBanners });
+
     // heroSlider
     console.log("📥 Importing heroSlider...");
     const heroSliders = loadJSON("HeroSlider.json");
     await prisma.heroSlider.createMany({ data: heroSliders });
 
     // privacyPolicy
+    console.log("📥 Importing privacyPolicy...");
     const privacyPolicy = loadJSON("PrivacyPolicy.json");
     await prisma.privacyPolicy.createMany({ data: privacyPolicy });
 
     // termsConditions
+    console.log("📥 Importing termsConditions...");
     const termsConditions = loadJSON("TermsConditions.json");
     await prisma.termsConditions.createMany({ data: termsConditions });
 
     // seoSetting
+    console.log("📥 Importing seoSetting...");
     const seoSetting = loadJSON("SeoSetting.json");
     await prisma.seoSetting.createMany({ data: seoSetting });
 
     // headerSetting
+    console.log("📥 Importing headerSetting...");
     const headerSetting = loadJSON("HeaderSetting.json");
     await prisma.headerSetting.createMany({ data: headerSetting });
 
