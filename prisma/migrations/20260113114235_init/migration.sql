@@ -309,7 +309,7 @@ CREATE TABLE "TermsConditions" (
 CREATE TABLE "SeoSetting" (
     "id" SERIAL NOT NULL,
     "favicon" TEXT,
-    "siteName" TEXT DEFAULT 'Cozy-commerce',
+    "siteName" TEXT DEFAULT 'Isola Boutique',
     "siteTitle" TEXT DEFAULT 'Home Page',
     "metadescription" TEXT,
     "metaImage" TEXT,

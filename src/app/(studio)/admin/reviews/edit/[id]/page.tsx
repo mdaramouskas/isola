@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: Params) {
   const site_name = await getSiteName();
   if (reviewData) {
     return {
-      title: `${"Review with " + reviewData.productSlug} | ${site_name} - Next.js E-commerce Template`,
+      title: `${"Review with " + reviewData.productSlug} | ${site_name}`,
       author: `${site_name}`,
       alternates: {
         canonical: `${siteURL}/admin/reviews/edit/${reviewData.id}`,

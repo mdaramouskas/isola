@@ -17,7 +17,7 @@ export const getSiteName = unstable_cache(
         siteName: true,
       },
     });
-    return siteName ? siteName.siteName : process.env.SITE_NAME ? process.env.SITE_NAME : "Cozy-commerce";
+  return siteName ? siteName.siteName : process.env.SITE_NAME ? process.env.SITE_NAME : "Isola Boutique";
   },
   ['site-name'], { tags: ['site-name'] }
 );
