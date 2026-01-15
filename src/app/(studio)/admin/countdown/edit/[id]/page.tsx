@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: Params) {
     return {
       title: `${
         countdownData?.title || "Countdown Page"
-      } | ${site_name} - Next.js E-commerce Template`,
+      } | ${site_name}`,
       description: `${countdownData?.subtitle?.slice(0, 136)}...`,
       author: `${site_name}`,
       alternates: {

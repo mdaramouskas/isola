@@ -1,3 +1,4 @@
+export const runtime = "nodejs"
 import "./css/style.css";
 import { Metadata } from "next";
 import { getSeoSettings, getSiteName } from "@/get-api-data/seo-setting";
@@ -12,10 +13,10 @@ const dm_sans = DM_Sans({
 
 export async function generateMetadata(): Promise<Metadata> {
   const seoSettings = await getSeoSettings();
-  const site_name = await getSiteName();
+  // const site_name = await getSiteName();
   return {
-    title: `CozyCommerce Store`,
-    description: "This is a site of CozyCommerce",
+    title: `Isola Boutique Store`,
+    description: "This is a site of Isola Boutique",
     keywords: seoSettings?.metaKeywords || "e-commerce, online store",
     openGraph: {
       images: seoSettings?.metaImage ? [seoSettings.metaImage] : [],

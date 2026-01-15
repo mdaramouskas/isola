@@ -1,8 +1,8 @@
-# Installing and Deploying CozyCommerce
+# Installing and Deploying Isola Boutique
 
-## Install and Deploy CozyCommerce
+## Install and Deploy Isola Boutique
 
-In this part of the documentation we will show you how to install CozyCommerce.
+In this part of the documentation we will show you how to install Isola Boutique.
 
 <Callout type="info">
   Before moving forward, make sure you have Node.js installed on your machine.
@@ -37,7 +37,7 @@ yarn dev
 Once the installation is done,  
 Follow these steps to complete the installation.
 
-1. [Database Integration - PostgreSQL on Vercel](https://CozyCommerce.com//docs/database/postgresql)
+1. [Database Integration - PostgreSQL on Vercel](https://isolaboutique.com//docs/database/postgresql)
 
 <Callout type="info">
   **Note:** you can use any PostgreSQL you want. Just save the database url in
@@ -48,11 +48,11 @@ Follow these steps to complete the installation.
 DATABASE_URL=YOUR_DB_CONNECT_URL
 ```
 
-2. [Authentication](https://CozyCommerce.com//docs/authentication)
+2. [Authentication](https://isolaboutique.com//docs/authentication)
 
-3.[Stripe Integration](https://CozyCommerce.com//docs/stripe)
+3.[Stripe Integration](https://isolaboutique.com//docs/stripe)
 
-4.[Algolia Integration](https://CozyCommerce.com//docs/algolia)
+4.[Algolia Integration](https://isolaboutique.com//docs/algolia)
 
 ---
 

@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: Params) {
     return {
       title: `${
         productData?.title || "Product Page"
-      } | ${site_name} - Next.js E-commerce Template`,
+      } | ${site_name}`,
       description: `${productData?.description?.slice(0, 136)}...`,
       author: `${site_name}`,
       alternates: {

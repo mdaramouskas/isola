@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: Params) {
     return {
       title: `${
         postAuthorData?.name || "Post Author Page"
-      } | ${site_name} - Next.js E-commerce Template`,
+      } | ${site_name}`,
       author: `${site_name}`,
       alternates: {
         canonical: `${siteURL}/admin/post-authors/edit/${postAuthorData.id}`,

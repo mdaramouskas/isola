@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: Params) {
     return {
       title: `${
         heroSliderData?.sliderName || "Hero Slider Page"
-      } | ${site_name} - Next.js E-commerce Template`,
+      } | ${site_name}`,
       author: `${site_name}`,
       alternates: {
         canonical: `${siteURL}/admin/hero-slider/edit/${heroSliderData.id}`,
