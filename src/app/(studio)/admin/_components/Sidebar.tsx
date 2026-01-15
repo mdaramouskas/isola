@@ -21,7 +21,7 @@ export default function Sidebar({
         <div className="z-10 p-4 bg-white sm:p-6 shrink-0 ">
           <Link href="/">
             <Image
-              src={headerLogo || "/images/logo/logo.svg"}
+              src={headerLogo || "/images/logo/logo.png"}
               alt="Logo"
               width={150}
               height={36}

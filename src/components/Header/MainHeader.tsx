@@ -122,7 +122,7 @@ const MainHeader = ({ headerData }: IProps) => {
             <div>
               <Link className="block shrink-0" href="/">
                 <Image
-                  src={headerData?.headerLogo || "/images/logo/logo.svg"}
+                  src={headerData?.headerLogo || "/images/logo/logo.png"}
                   alt="Logo"
                   width={148}
                   height={36}

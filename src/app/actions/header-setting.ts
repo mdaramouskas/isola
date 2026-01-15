@@ -61,8 +61,11 @@ export const createHeaderSetting = async (formData: FormData) => {
       },
     });
 
-    revalidateTag("header-setting", { expire: 0 });
-    return successResponse(201, "Header Setting created successfully", headerSetting);
+  // Revalidate cache tags used by getLogo/getEmailLogo so the updated logos are visible
+  revalidateTag("header-setting", { expire: 0 });
+  revalidateTag("header-logo", { expire: 0 });
+  revalidateTag("email-logo", { expire: 0 });
+  return successResponse(201, "Header Setting created successfully", headerSetting);
   } catch (error: any) {
     console.error("Error creating Header setting:", error?.stack || error);
     return errorResponse(500, error?.message || "Internal server error");
@@ -139,7 +142,10 @@ export const updateHeaderSetting = async (
       },
     });
 
+    // Revalidate cache tags so updated logos are picked up by cached getters
     revalidateTag("header-setting", { expire: 0 });
+    revalidateTag("header-logo", { expire: 0 });
+    revalidateTag("email-logo", { expire: 0 });
     return successResponse(
       200,
       "Header Setting updated successfully",
