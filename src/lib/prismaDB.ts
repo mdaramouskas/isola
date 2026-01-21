@@ -1,20 +1,40 @@
 import { PrismaClient } from "@prisma/client"
 import { PrismaPg } from "@prisma/adapter-pg"
- 
- const globalForPrisma = global as unknown as {
-   prisma: PrismaClient
- }
- 
-const rejectUnauthorized =
-  process.env.DATABASE_SSL_REJECT_UNAUTHORIZED !== "false"
 
- const adapter = new PrismaPg({
-   connectionString: process.env.DATABASE_URL,
-  ssl: rejectUnauthorized ? undefined : { rejectUnauthorized: false },
- })
- 
- export const prisma = globalForPrisma.prisma || new PrismaClient({
-   adapter,
- })
- 
- if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
+const globalForPrisma = globalThis as unknown as {
+  prisma?: PrismaClient
+}
+
+// Prefer DATABASE_URL (pooler) then DIRECT_URL (direct DB host)
+const connectionString = process.env.DATABASE_URL || process.env.DIRECT_URL
+const which = process.env.DATABASE_URL ? "DATABASE_URL" : process.env.DIRECT_URL ? "DIRECT_URL" : null
+if (!connectionString || !which) {
+  throw new Error("Missing DATABASE_URL or DIRECT_URL environment variable. Set DATABASE_URL (preferred) or DIRECT_URL.")
+}
+
+try {
+  console.log(`Using DB env: ${which} ->`, new URL(connectionString).host)
+} catch (e) {
+  console.warn("Unable to parse DB host from connection string")
+}
+
+const sslMode = process.env.PGSSLMODE ?? process.env.PG_SSLMODE
+const ssl =
+  sslMode === "require" ||
+  sslMode === "verify-ca" ||
+  sslMode === "verify-full" ||
+  sslMode === "no-verify"
+    ? { rejectUnauthorized: sslMode !== "no-verify" }
+    : undefined
+const adapter = new PrismaPg({
+  connectionString,
+  ssl,
+})
+
+export const prisma =
+  globalForPrisma.prisma ??
+  new PrismaClient({
+    adapter,
+  })
+
+if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma
