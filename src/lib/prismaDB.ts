@@ -5,6 +5,10 @@ const globalForPrisma = globalThis as unknown as {
   prisma?: PrismaClient
 }
 
+// DEV: allow self-signed certificates in development to avoid TLS errors
+if (process.env.NODE_ENV !== 'production') {
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
+}
 // Prefer DATABASE_URL (pooler) then DIRECT_URL (direct DB host)
 const connectionString = process.env.DATABASE_URL || process.env.DIRECT_URL
 const which = process.env.DATABASE_URL ? "DATABASE_URL" : process.env.DIRECT_URL ? "DIRECT_URL" : null
