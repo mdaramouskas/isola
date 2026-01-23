@@ -30,8 +30,16 @@ export const getLogo = unstable_cache(
         headerLogo: true,
       },
     });
-    // prefer DB value, otherwise use local logo in `public/images/logo/logo.svg`
-    const logo = headerLogo ? headerLogo.headerLogo : '/images/logo/logo.svg';
+    // prefer DB value unless it's an external Cloudinary URL; otherwise use local logo
+    let logo = '/images/logo/logo.png';
+    if (headerLogo && headerLogo.headerLogo) {
+      const candidate = headerLogo.headerLogo;
+      if (typeof candidate === 'string' && candidate.includes('res.cloudinary.com')) {
+        logo = '/images/logo/logo.png';
+      } else {
+        logo = candidate as string;
+      }
+    }
     return logo;
   },
   ['header-logo'], { tags: ['header-logo'] }
@@ -45,7 +53,15 @@ export const getEmailLogo = unstable_cache(
         emailLogo: true,
       },
     });
-    const logo = emailLogo ? emailLogo.emailLogo : '/images/logo/logo.svg';
+    let logo = '/images/logo/logo.png';
+    if (emailLogo && emailLogo.emailLogo) {
+      const candidate = emailLogo.emailLogo;
+      if (typeof candidate === 'string' && candidate.includes('res.cloudinary.com')) {
+        logo = '/images/logo/logo.png';
+      } else {
+        logo = candidate as string;
+      }
+    }
     return logo;
   },
   ['email-logo'], { tags: ['email-logo'] }
