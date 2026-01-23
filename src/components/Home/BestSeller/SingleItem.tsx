@@ -106,12 +106,16 @@ const SingleItem = ({ item }: { item: Product }) => {
         </div>
         <div className="flex items-center justify-center">
           <Link href={`/products/${item?.slug}`}>
-            <Image
-              src={defaultVariant?.image ? defaultVariant.image : ""}
-              alt={item.title || "product-image"}
-              width={280}
-              height={280}
-            />
+            {(() => {
+              const imgSrc = defaultVariant?.image ? defaultVariant.image : "";
+              const isExternal = typeof imgSrc === "string" && (imgSrc.startsWith("http://") || imgSrc.startsWith("https://"));
+              return isExternal ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={imgSrc} alt={item.title || "product-image"} width={280} height={280} />
+              ) : (
+                <Image src={imgSrc} alt={item.title || "product-image"} width={280} height={280} />
+              );
+            })()}
           </Link>
         </div>
 

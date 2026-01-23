@@ -44,16 +44,31 @@ const CountdownBanner = ({ data }: CountdownBannerProps) => {
   );
 };
 
-const BackgroundImages = ({ data }: CountdownBannerProps) => (
-  <>
-    <Image
-      src={data.countdownImage}
-      alt="product"
-      className="mx-auto mt-10 lg:mt-0 lg:absolute lg:block right-4 xl:right-33 bottom-4 xl:bottom-14 -z-1"
-      width={316}
-      height={370}
-    />
-  </>
-);
+const BackgroundImages = ({ data }: CountdownBannerProps) => {
+  const imgSrc = data.countdownImage;
+  const isExternal = typeof imgSrc === "string" && (imgSrc.startsWith("http://") || imgSrc.startsWith("https://"));
+  return (
+    <>
+      {isExternal ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={imgSrc}
+          alt="product"
+          className="mx-auto mt-10 lg:mt-0 lg:absolute lg:block right-4 xl:right-33 bottom-4 xl:bottom-14 -z-1"
+          width={316}
+          height={370}
+        />
+      ) : (
+        <Image
+          src={imgSrc}
+          alt="product"
+          className="mx-auto mt-10 lg:mt-0 lg:absolute lg:block right-4 xl:right-33 bottom-4 xl:bottom-14 -z-1"
+          width={316}
+          height={370}
+        />
+      )}
+    </>
+  );
+};
 
 export default CountdownBanner;

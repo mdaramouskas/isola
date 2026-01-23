@@ -15,6 +15,7 @@ const nextConfig = {
         protocol: "https",
         hostname: "res.cloudinary.com",
       },
+      // Cloudinary removed from allowed remote image hosts
     ],
   },
   redirects: async () => {

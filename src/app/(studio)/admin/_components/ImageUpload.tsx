@@ -129,9 +129,8 @@ export default function ImageUpload({
               }`}
             >
               {previews.map((src, index) => {
-                const isCloudinaryImage = src.startsWith(
-                  "https://res.cloudinary.com"
-                );
+                // Treat any remote http(s) URL as external (non-deletable).
+                const isExternalImage = src.startsWith("http://") || src.startsWith("https://");
 
                 return (
                   <div key={index} className="relative">
@@ -144,14 +143,15 @@ export default function ImageUpload({
                         height={64}
                       />
                     </div>
-                    {!isCloudinaryImage && (
+                    {!isExternalImage && (
                       <button
                         type="button"
                         onClick={() => {
                           setPreviews((prevPreviews) => {
-                            if (!isCloudinaryImage) {
+                            // Only revoke object URLs (blob:) and local previews
+                            try {
                               URL.revokeObjectURL(prevPreviews[index]);
-                            }
+                            } catch {}
                             if (fileInputRef.current) {
                               fileInputRef.current.value = "";
                             }

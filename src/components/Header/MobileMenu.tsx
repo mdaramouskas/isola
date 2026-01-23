@@ -82,13 +82,16 @@ const MobileMenu = ({
           <div className="flex items-center justify-between p-4 border-b border-gray-3">
             <div>
               <Link className="block shrink-0" href="/">
-                <Image
-                  src={headerLogo || "/images/logo/logo-icon.svg"}
-                  alt="Logo"
-                  width={100}
-                  height={32}
-                  priority
-                />
+                {(() => {
+                  const logoSrc = headerLogo || "/images/logo/logo-icon.svg";
+                  const isExternal = typeof logoSrc === "string" && (logoSrc.startsWith("http://") || logoSrc.startsWith("https://"));
+                  return isExternal ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={logoSrc} alt="Logo" width={100} height={32} />
+                  ) : (
+                    <Image src={logoSrc} alt="Logo" width={100} height={32} priority />
+                  );
+                })()}
               </Link>
             </div>
             <button

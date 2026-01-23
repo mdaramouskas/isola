@@ -10,9 +10,16 @@ const SingleItem = ({ item }: { item: Category }) => {
       className="flex flex-col items-center group"
     >
       <div className="w-[130px] h-[130px] bg-[#F2F3F8]  rounded-full flex items-center justify-center mb-4">
-        {item.img && (
-          <Image src={item.img} alt="Category" width={80} height={80} />
-        )}
+        {item.img && (() => {
+          const imgSrc = item.img;
+          const isExternal = typeof imgSrc === "string" && (imgSrc.startsWith("http://") || imgSrc.startsWith("https://"));
+          return isExternal ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={imgSrc} alt="Category" width={80} height={80} />
+          ) : (
+            <Image src={imgSrc} alt="Category" width={80} height={80} />
+          );
+        })()}
       </div>
 
       <div className="flex justify-center">

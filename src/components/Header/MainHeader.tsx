@@ -121,13 +121,18 @@ const MainHeader = ({ headerData }: IProps) => {
             {/* Logo */}
             <div>
               <Link className="block shrink-0" href="/">
-                <Image
-                  src={headerData?.headerLogo || "/images/logo/logo.png"}
-                  alt="Logo"
-                  width={148}
-                  height={36}
-                  priority
-                />
+                {(() => {
+                  const logoSrc = headerData?.headerLogo || "/images/logo/logo.png";
+                  const isExternal = typeof logoSrc === "string" && (logoSrc.startsWith("http://") || logoSrc.startsWith("https://"));
+                  return isExternal ? (
+                    // Use a plain <img> for external URLs to avoid next/image host config requirement
+                    // Keep same dimensions so layout remains consistent
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={logoSrc} alt="Logo" width={148} height={36} />
+                  ) : (
+                    <Image src={logoSrc} alt="Logo" width={148} height={36} priority />
+                  );
+                })()}
               </Link>
             </div>
 

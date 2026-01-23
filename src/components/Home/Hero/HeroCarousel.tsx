@@ -67,13 +67,16 @@ const HeroCarousal = ({ sliders }: { sliders: any }) => {
             </div>
 
             <div>
-              <Image
-                src={slider?.sliderImage ? slider?.sliderImage! : "/no image"}
-                alt="headphone"
-                width={320}
-                height={400}
-                loading="eager"
-              />
+              {(() => {
+                const imgSrc = slider?.sliderImage ? slider.sliderImage : "/no image";
+                const isExternal = typeof imgSrc === "string" && (imgSrc.startsWith("http://") || imgSrc.startsWith("https://"));
+                return isExternal ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={imgSrc} alt="headphone" width={320} height={400} loading="eager" />
+                ) : (
+                  <Image src={imgSrc} alt="headphone" width={320} height={400} loading="eager" />
+                );
+              })()}
             </div>
           </div>
         </SwiperSlide>

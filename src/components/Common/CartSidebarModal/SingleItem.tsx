@@ -22,7 +22,16 @@ const SingleItem = ({ item }: any) => {
     <div className="flex items-center justify-between gap-5">
       <div className="flex items-center w-full gap-6">
         <div className="flex items-center justify-center rounded-[10px] bg-gray-3 w-22.5 h-22.5 shrink-0">
-          <Image src={item.image} alt="product" width={64} height={64} />
+          {(() => {
+            const imgSrc = item.image;
+            const isExternal = typeof imgSrc === "string" && (imgSrc.startsWith("http://") || imgSrc.startsWith("https://"));
+            return isExternal ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={imgSrc} alt="product" width={64} height={64} />
+            ) : (
+              <Image src={imgSrc} alt="product" width={64} height={64} />
+            );
+          })()}
         </div>
 
         <div>

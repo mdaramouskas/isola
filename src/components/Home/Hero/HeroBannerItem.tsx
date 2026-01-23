@@ -40,12 +40,16 @@ export default function HeroBannerItem({ bannerItem }: { bannerItem: any }) {
           </div>
         </div>
         <div className="w-1/2">
-          <Image
-            src={bannerItem?.bannerImage}
-            alt="mobile image"
-            width={170}
-            height={210}
-          />
+          {(() => {
+            const imgSrc = bannerItem?.bannerImage;
+            const isExternal = typeof imgSrc === "string" && (imgSrc.startsWith("http://") || imgSrc.startsWith("https://"));
+            return isExternal ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={imgSrc} alt="mobile image" width={170} height={210} />
+            ) : (
+              <Image src={imgSrc} alt="mobile image" width={170} height={210} />
+            );
+          })()}
         </div>
       </div>
     </div>

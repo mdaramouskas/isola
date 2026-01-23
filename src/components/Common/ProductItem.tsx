@@ -98,12 +98,16 @@ const ProductItem = ({ item, bgClr = "[#F6F7FB]" }: Props) => {
               : `products/${item?.slug}`
             }`}
         >
-          <Image
-            src={defaultVariant?.image ? defaultVariant.image : ""}
-            alt={item.title || "product-image"}
-            width={250}
-            height={250}
-          />
+          {(() => {
+            const imgSrc = defaultVariant?.image ? defaultVariant.image : "";
+            const isExternal = typeof imgSrc === "string" && (imgSrc.startsWith("http://") || imgSrc.startsWith("https://"));
+            return isExternal ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={imgSrc} alt={item.title || "product-image"} width={250} height={250} />
+            ) : (
+              <Image src={imgSrc} alt={item.title || "product-image"} width={250} height={250} />
+            );
+          })()}
         </Link>
         <div className="absolute top-2 right-2">
           {item.quantity < 1 ? (
