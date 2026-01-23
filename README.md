@@ -32,6 +32,11 @@ or
 yarn dev
 ```
 
+## Isola external sync
+
+Integration for syncing products/categories/images from the external Isola bridge.
+See `docs/isola-sync.md` and `src/integrations/isola/syncContract.md` for the contract and quick start.
+
 ### Next Steps
 
 Once the installation is done,  

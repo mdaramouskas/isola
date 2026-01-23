@@ -30,7 +30,8 @@ export const getLogo = unstable_cache(
         headerLogo: true,
       },
     });
-    const logo = headerLogo ? headerLogo.headerLogo : "https://res.cloudinary.com/dc6svbdh9/image/upload/v1746335068/header/tsvfm6pvfwpbpyqdtxwn.svg";
+    // prefer DB value, otherwise use local logo in `public/images/logo/logo.svg`
+    const logo = headerLogo ? headerLogo.headerLogo : '/images/logo/logo.svg';
     return logo;
   },
   ['header-logo'], { tags: ['header-logo'] }
@@ -44,7 +45,7 @@ export const getEmailLogo = unstable_cache(
         emailLogo: true,
       },
     });
-    const logo = emailLogo ? emailLogo.emailLogo : "https://res.cloudinary.com/dc6svbdh9/image/upload/v1746693785/logo_ouegg7.png";
+    const logo = emailLogo ? emailLogo.emailLogo : '/images/logo/logo.svg';
     return logo;
   },
   ['email-logo'], { tags: ['email-logo'] }
