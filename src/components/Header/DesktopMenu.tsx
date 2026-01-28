@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import type { MenuItem } from "./types";
 import { usePathname } from "next/navigation";
 
@@ -13,6 +14,7 @@ interface DesktopMenuProps {
 const DesktopMenu = ({ menuData, stickyMenu }: DesktopMenuProps) => {
   const [activeDropdown, setActiveDropdown] = useState<number | null>(null);
   const pathname = usePathname();
+  const router = useRouter();
   const [categories, setCategories] = useState<{ id: number; title: string; slug: string }[]>([]);
   const [brands, setBrands] = useState<string[]>([]);
 
@@ -52,10 +54,16 @@ const DesktopMenu = ({ menuData, stickyMenu }: DesktopMenuProps) => {
             onMouseEnter={() => handleMouseEnter(i)}
             onMouseLeave={handleMouseLeave}
           >
-            {menuItem.submenu || menuItem.path === '/shop-by-product' || menuItem.path === '/shop-by-brand' ? (
+            {menuItem.submenu || menuItem.title === 'Shop by Product' || menuItem.title === 'Shop By Brand' ? (
               <>
                 <button
                   className={`flex items-center gap-1 hover:text-blue font-medium ${stickyMenu ? "py-4" : "py-6"} relative text-sm font-medium ${menuItem.submenu?.some(subItem => pathname === subItem.path) ? "text-blue" : "text-dark"}`}
+                  onClick={() => {
+                    // top-level click should navigate to the shop page so sidebar/filters are available
+                    if (menuItem.title === 'Shop by Product' || menuItem.title === 'Shop By Brand') {
+                      router.push('/shop');
+                    }
+                  }}
                 >
                   {menuItem.title}
                   <svg
@@ -82,7 +90,7 @@ const DesktopMenu = ({ menuData, stickyMenu }: DesktopMenuProps) => {
                       : "opacity-0 translate-y-2 invisible"
                     }`}
                 >
-                  {menuItem.path === '/shop-by-product' ? (
+                  {menuItem.title === 'Shop by Product' ? (
                     <div className="grid grid-cols-2 gap-4">
                       <div>
                         <p className="font-semibold mb-2">Men</p>
@@ -101,7 +109,7 @@ const DesktopMenu = ({ menuData, stickyMenu }: DesktopMenuProps) => {
                         ))}
                       </div>
                     </div>
-                  ) : menuItem.path === '/shop-by-brand' ? (
+                  ) : menuItem.title === 'Shop By Brand' ? (
                     <div className="grid grid-cols-2 gap-4">
                       <div>
                         <p className="font-semibold mb-2">Men</p>

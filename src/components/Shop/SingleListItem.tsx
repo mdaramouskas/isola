@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { EyeIcon } from "@/assets/icons";
 import { Product } from "@/types/product";
+import { useSearchParams } from "next/navigation";
 import { useModalContext } from "@/app/context/QuickViewModalContext";
 import { updateQuickView } from "@/redux/features/quickView-slice";
 import { addItemToWishlist } from "@/redux/features/wishlist-slice";
@@ -20,13 +21,47 @@ const SingleListItem = ({ item }: { item: Product }) => {
   const defaultVariant = item?.productVariants.find(
     (variant) => variant.isDefault
   );
+  const searchParams = useSearchParams();
+  const selectedColors = searchParams.get("colors")
+    ? searchParams.get("colors")!.split(",")
+    : [];
+  const selectedSizes = searchParams.get("sizes")
+    ? searchParams.get("sizes")!.split(",")
+    : [];
+
+  const resolvedVariant = (() => {
+    const variants = item.productVariants || [];
+    if (!variants.length) return defaultVariant;
+
+    if (selectedColors.length && selectedSizes.length) {
+      const exact = variants.find(
+        (v) => selectedColors.includes(v.color) && selectedSizes.includes(v.size)
+      );
+      if (exact) return exact;
+    }
+
+    if (selectedColors.length) {
+      const byColor = variants.find((v) => selectedColors.includes(v.color));
+      if (byColor) return byColor;
+    }
+
+    if (selectedSizes.length) {
+      const bySize = variants.find((v) => selectedSizes.includes(v.size));
+      if (bySize) return bySize;
+    }
+
+    return defaultVariant || variants[0];
+  })();
   const { openModal } = useModalContext();
   const dispatch = useDispatch<AppDispatch>();
 
   const { addItem, cartDetails } = useCart();
 
   const isItemInCart = Object.values(cartDetails ?? {}).some(
-    (cartItem) => cartItem.id === item.id
+    (cartItem) =>
+      cartItem.id === item.id &&
+      (cartItem.color || "") === (resolvedVariant?.color || "") &&
+      (cartItem.size || "") === (resolvedVariant?.size || "")
   );
 
   const cartItem = {
@@ -34,11 +69,11 @@ const SingleListItem = ({ item }: { item: Product }) => {
     name: item.title,
     price: item.discountedPrice ? item.discountedPrice : item.price,
     currency: "usd",
-    image: defaultVariant?.image ? defaultVariant.image : "",
+    image: resolvedVariant?.image ? resolvedVariant.image : "",
     price_id: null,
     slug: item?.slug,
     availableQuantity: item.quantity,
-    color: defaultVariant?.color ? defaultVariant.color : "",
+    color: resolvedVariant?.color ? resolvedVariant.color : "",
   };
 
   // update the QuickView state
@@ -70,10 +105,10 @@ const SingleListItem = ({ item }: { item: Product }) => {
         id: item.id,
         title: item.title,
         slug: item.slug,
-        image: defaultVariant?.image ? defaultVariant.image : "",
+        image: resolvedVariant?.image ? resolvedVariant.image : "",
         price: item.discountedPrice ? item.discountedPrice : item.price,
         quantity: item.quantity,
-        color: defaultVariant?.color ? defaultVariant.color : "",
+        color: resolvedVariant?.color ? resolvedVariant.color : "",
       })
     );
   };
@@ -85,7 +120,7 @@ const SingleListItem = ({ item }: { item: Product }) => {
           {
             <Link href={`/products/${item?.slug}`}>
               <Image
-                src={defaultVariant?.image || ""}
+                src={resolvedVariant?.image || ""}
                 alt={item.title || "product-image"}
                 className="object-cover"
                 width={270}
@@ -148,6 +183,24 @@ const SingleListItem = ({ item }: { item: Product }) => {
                 </span>
               )}
             </span>
+            {/* Attributes display */}
+            <div className="flex items-center gap-3 text-sm mt-2 text-dark-3">
+              {resolvedVariant?.color && (
+                <div className="flex items-center gap-2">
+                  <span
+                    className="inline-block w-3 h-3 rounded-full"
+                    style={{ backgroundColor: resolvedVariant.color }}
+                  />
+                  <span>{resolvedVariant.color}</span>
+                </div>
+              )}
+
+              {resolvedVariant?.size && (
+                <div className="flex items-center gap-2">
+                  <span className="text-sm">{resolvedVariant.size}</span>
+                </div>
+              )}
+            </div>
           </div>
         </Link>
       </div>

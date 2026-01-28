@@ -46,6 +46,33 @@ const ShopDetails = ({ product, avgRating, totalRating }: IProps) => {
   const [selectedAttributes, setSelectedAttributes] =
     useState<SelectedAttributesType>({});
 
+  const resolvedVariant = (() => {
+    const variants = product?.productVariants || [];
+    if (!variants.length) return defaultVariant;
+
+    // exact match color+size
+    if (activeColor && activeSize) {
+      const exact = variants.find(
+        (v) => v.color === activeColor && v.size === activeSize
+      );
+      if (exact) return exact;
+    }
+
+    // match color
+    if (activeColor) {
+      const byColor = variants.find((v) => v.color === activeColor);
+      if (byColor) return byColor;
+    }
+
+    // match size
+    if (activeSize) {
+      const bySize = variants.find((v) => v.size === activeSize);
+      if (bySize) return bySize;
+    }
+
+    return defaultVariant || variants[0];
+  })();
+
   const { addItem, cartDetails, incrementItem } = useCart();
 
   const isAlradyAdded = Object.values(cartDetails ?? {}).some(
@@ -61,11 +88,11 @@ const ShopDetails = ({ product, avgRating, totalRating }: IProps) => {
     name: product.title,
     price: product.discountedPrice || product.price,
     currency: "usd",
-    image: defaultVariant ? defaultVariant?.image : "",
+    image: resolvedVariant ? resolvedVariant?.image : defaultVariant?.image || "",
     slug: product?.slug,
     availableQuantity: product.quantity,
-    color: activeColor,
-    size: activeSize || "",
+    color: resolvedVariant?.color || activeColor,
+    size: resolvedVariant?.size || activeSize || "",
     attribute: selectedAttributes || "",
   };
 
@@ -86,7 +113,9 @@ const ShopDetails = ({ product, avgRating, totalRating }: IProps) => {
       return;
     }
 
-    const isAlreadyItemInCart = !!cartDetails?.[cartItem.id];
+    const isAlreadyItemInCart = Object.values(cartDetails ?? {}).some(
+      (ci) => ci.id === cartItem.id && (ci.color || "") === (cartItem.color || "") && (ci.size || "") === (cartItem.size || "")
+    );
 
     if (isCheckout) {
       if (isAlreadyItemInCart) {
@@ -108,7 +137,8 @@ const ShopDetails = ({ product, avgRating, totalRating }: IProps) => {
     await addItem({ ...cartItem, quantity: 1 });
 
     for (let i = 1; i < quantity; i++) {
-      await incrementItem(cartItem.id);
+      const key = `${cartItem.id}-${cartItem.color || ""}-${cartItem.size || ""}`;
+      await incrementItem(key as any);
     }
 
     toast.success("Product added to cart!");
@@ -147,12 +177,12 @@ const ShopDetails = ({ product, avgRating, totalRating }: IProps) => {
         id: product.id,
         title: product.title,
         slug: product.slug,
-        image: defaultVariant?.image ? defaultVariant.image : "",
+        image: resolvedVariant?.image ? resolvedVariant.image : defaultVariant?.image || "",
         price: product.discountedPrice
           ? product.discountedPrice
           : product.price,
         quantity: product.quantity,
-        color: activeSize ? activeSize : "",
+        color: resolvedVariant?.color || activeColor || "",
       })
     );
   };

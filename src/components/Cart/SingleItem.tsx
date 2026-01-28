@@ -10,12 +10,14 @@ const SingleItem = ({ item }: any) => {
   const { incrementItem, decrementItem, removeItem } = useCart();
 
   const handleRemoveFromCart = () => {
-    removeItem(item.id);
+    const key = `${item.id}-${item.color || ""}-${item.size || ""}`;
+    removeItem(key);
   };
 
   const handleIncreaseQuantity = () => {
     if (item.quantity < item?.availableQuantity) {
-      incrementItem(item.id);
+      const key = `${item.id}-${item.color || ""}-${item.size || ""}`;
+      incrementItem(key);
     } else {
       toast.error("You cannot add more than available stock!");
     }
@@ -23,7 +25,8 @@ const SingleItem = ({ item }: any) => {
 
   const handleDecreaseQuantity = () => {
     if (item.quantity > 1) {
-      decrementItem(item.id);
+      const key = `${item.id}-${item.color || ""}-${item.size || ""}`;
+      decrementItem(key);
     }
   };
 
@@ -43,6 +46,24 @@ const SingleItem = ({ item }: any) => {
             <h3 className="duration-200 ease-out text-dark hover:text-blue">
               <Link href={`/products/${item.slug}`}> {item.name} </Link>
             </h3>
+            <div className="text-sm text-dark-3 mt-1 flex items-center gap-4">
+              {item.color && (
+                <div className="flex items-center gap-2">
+                  <span
+                    className="inline-block w-3 h-3 rounded-full"
+                    style={{ backgroundColor: item.color }}
+                  />
+                  <span>{item.color}</span>
+                </div>
+              )}
+
+              {item.size && (
+                <div className="flex items-center gap-2">
+                  <span>Size:</span>
+                  <span className="font-medium">{item.size}</span>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </td>

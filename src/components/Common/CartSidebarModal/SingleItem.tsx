@@ -8,7 +8,8 @@ const SingleItem = ({ item }: any) => {
   const { removeItem, handleCartClick } = useCart();
   const router = useRouter();
   const handleRemoveFromCart = () => {
-    removeItem(item.id);
+    const key = `${item.id}-${item.color || ""}-${item.size || ""}`;
+    removeItem(key);
   };
 
   const handleProductClick = () => {
@@ -41,6 +42,24 @@ const SingleItem = ({ item }: any) => {
             </button>
           </h3>
           <p className="font-normal text-custom-sm">Price: ${item.price}</p>
+          <div className="text-sm text-dark-3 mt-1 flex items-center gap-4">
+            {item.color && (
+              <div className="flex items-center gap-2">
+                <span
+                  className="inline-block w-3 h-3 rounded-full"
+                  style={{ backgroundColor: item.color }}
+                />
+                <span>{item.color}</span>
+              </div>
+            )}
+
+            {item.size && (
+              <div className="flex items-center gap-2">
+                <span className="text-sm">Size:</span>
+                <span className="font-medium">{item.size}</span>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 

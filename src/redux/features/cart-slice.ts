@@ -37,10 +37,19 @@ export const cart = createSlice({
   reducers: {
     addItemToCart: (state, action: PayloadAction<CartItem>) => {
       const item = action.payload;
-      const existingItem = state.items.find((i) => i.id === item.id);
+      // match existing item by product id AND selected variant attributes (color & size)
+      const existingItem = state.items.find(
+        (i) =>
+          i.id === item.id &&
+          (i.color || "") === (item.color || "") &&
+          (i.size || "") === (item.size || "")
+      );
 
       if (existingItem) {
         existingItem.quantity += item.quantity || 1;
+        // update image/other fields in case payload has newer info
+        existingItem.image = item.image || existingItem.image;
+        existingItem.availableQuantity = item.availableQuantity || existingItem.availableQuantity;
       } else {
         state.items.push({
           ...item,
@@ -49,20 +58,29 @@ export const cart = createSlice({
       }
     },
     removeItemFromCart: (state, action: PayloadAction<string | number>) => {
-      const itemId = action.payload;
-      state.items = state.items.filter((item) => item.id !== itemId);
+      const payloadKey = String(action.payload);
+      state.items = state.items.filter((item) => {
+        const key = `${item.id}-${item.color || ""}-${item.size || ""}`;
+        return key !== payloadKey && String(item.id) !== payloadKey;
+      });
     },
     incrementItem: (state, action: PayloadAction<string | number>) => {
-      const itemId = action.payload;
-      const existingItem = state.items.find((item) => item.id === itemId);
+      const payloadKey = String(action.payload);
+      const existingItem = state.items.find((item) => {
+        const key = `${item.id}-${item.color || ""}-${item.size || ""}`;
+        return key === payloadKey || String(item.id) === payloadKey;
+      });
 
       if (existingItem) {
         existingItem.quantity += 1;
       }
     },
     decrementItem: (state, action: PayloadAction<string | number>) => {
-      const itemId = action.payload;
-      const existingItem = state.items.find((item) => item.id === itemId);
+      const payloadKey = String(action.payload);
+      const existingItem = state.items.find((item) => {
+        const key = `${item.id}-${item.color || ""}-${item.size || ""}`;
+        return key === payloadKey || String(item.id) === payloadKey;
+      });
 
       if (existingItem && existingItem.quantity > 1) {
         existingItem.quantity -= 1;
@@ -73,7 +91,10 @@ export const cart = createSlice({
       action: PayloadAction<{ id: string | number; quantity: number }>
     ) => {
       const { id, quantity } = action.payload;
-      const existingItem = state.items.find((item) => item.id === id);
+      const existingItem = state.items.find((item) => {
+        const key = `${item.id}-${item.color || ""}-${item.size || ""}`;
+        return key === String(id) || item.id === id;
+      });
 
       if (existingItem) {
         existingItem.quantity = quantity;
@@ -108,9 +129,10 @@ export const selectCartCount = createSelector([selectCartItems], (items) => {
 });
 
 export const selectCartDetails = createSelector([selectCartItems], (items) => {
-  const details: Record<string | number, CartItem> = {};
+  const details: Record<string, CartItem> = {};
   items.forEach((item) => {
-    details[item.id] = item;
+    const key = `${item.id}-${item.color || ""}-${item.size || ""}`;
+    details[key] = item;
   });
   return details;
 });

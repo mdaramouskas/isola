@@ -7,7 +7,7 @@ import { AppDispatch } from "@/redux/store";
 import { Product } from "@/types/product";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { useCart } from "@/hooks/useCart";
@@ -26,6 +26,37 @@ const ProductItem = ({ item, bgClr = "[#F6F7FB]" }: Props) => {
   const defaultVariant = item?.productVariants.find(
     (variant) => variant.isDefault
   );
+  const searchParams = useSearchParams();
+  const selectedColors = searchParams.get("colors")
+    ? searchParams.get("colors")!.split(",")
+    : [];
+  const selectedSizes = searchParams.get("sizes")
+    ? searchParams.get("sizes")!.split(",")
+    : [];
+
+  const resolvedVariant = (() => {
+    const variants = item.productVariants || [];
+    if (!variants.length) return defaultVariant;
+
+    if (selectedColors.length && selectedSizes.length) {
+      const exact = variants.find(
+        (v) => selectedColors.includes(v.color) && selectedSizes.includes(v.size)
+      );
+      if (exact) return exact;
+    }
+
+    if (selectedColors.length) {
+      const byColor = variants.find((v) => selectedColors.includes(v.color));
+      if (byColor) return byColor;
+    }
+
+    if (selectedSizes.length) {
+      const bySize = variants.find((v) => selectedSizes.includes(v.size));
+      if (bySize) return bySize;
+    }
+
+    return defaultVariant || variants[0];
+  })();
   const { openModal } = useModalContext();
   // const [product, setProduct] = useState({});
   const dispatch = useDispatch<AppDispatch>();
@@ -35,7 +66,10 @@ const ProductItem = ({ item, bgClr = "[#F6F7FB]" }: Props) => {
   const pathUrl = usePathname();
 
   const isAlradyAdded = Object.values(cartDetails ?? {}).some(
-    (cartItem) => cartItem.id === item.id
+    (cartItem) =>
+      cartItem.id === item.id &&
+      (cartItem.color || "") === (resolvedVariant?.color || "") &&
+      (cartItem.size || "") === (resolvedVariant?.size || "")
   );
 
   const cartItem = {
@@ -43,11 +77,11 @@ const ProductItem = ({ item, bgClr = "[#F6F7FB]" }: Props) => {
     name: item.title,
     price: item.discountedPrice ? item.discountedPrice : item.price,
     currency: "usd",
-    image: defaultVariant?.image ? defaultVariant.image : "",
+    image: resolvedVariant?.image ? resolvedVariant.image : "",
     slug: item?.slug,
     availableQuantity: item.quantity,
-    color: defaultVariant?.color ? defaultVariant.color : "",
-    size: defaultVariant?.size ? defaultVariant.size : "",
+    color: resolvedVariant?.color ? resolvedVariant.color : "",
+    size: resolvedVariant?.size ? resolvedVariant.size : "",
   };
 
   // update the QuickView state
@@ -99,7 +133,7 @@ const ProductItem = ({ item, bgClr = "[#F6F7FB]" }: Props) => {
             }`}
         >
           {(() => {
-            const imgSrc = defaultVariant?.image ? defaultVariant.image : "";
+            const imgSrc = resolvedVariant?.image ? resolvedVariant.image : "";
             const isExternal = typeof imgSrc === "string" && (imgSrc.startsWith("http://") || imgSrc.startsWith("https://"));
             return isExternal ? (
               // eslint-disable-next-line @next/next/no-img-element
@@ -165,6 +199,25 @@ const ProductItem = ({ item, bgClr = "[#F6F7FB]" }: Props) => {
           {item.title}{" "}
         </Link>
       </h3>
+
+      {/* Attributes display (color / size) */}
+      <div className="flex items-center gap-3 text-sm mt-1 text-dark-3">
+        {resolvedVariant?.color && (
+          <div className="flex items-center gap-2">
+            <span
+              className="inline-block w-3 h-3 rounded-full"
+              style={{ backgroundColor: resolvedVariant.color }}
+            />
+            <span>{resolvedVariant.color}</span>
+          </div>
+        )}
+
+        {resolvedVariant?.size && (
+          <div className="flex items-center gap-2">
+            <span className="text-sm">{resolvedVariant.size}</span>
+          </div>
+        )}
+      </div>
 
       <span className="flex items-center gap-2 text-base font-medium">
         {item.discountedPrice && (
