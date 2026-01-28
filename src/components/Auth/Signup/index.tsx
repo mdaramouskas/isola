@@ -1,5 +1,5 @@
 "use client";
-import { GitHubIcon, GoogleIcon } from "@/assets/icons/social";
+import { GoogleIcon } from "@/assets/icons/social";
 import Loader from "@/components/Common/Loader";
 import cn from "@/utils/cn";
 import axios, { AxiosError } from "axios";
@@ -93,14 +93,7 @@ const Signup = () => {
                 Sign Up with Google
               </button>
 
-              <button
-                onClick={() => signIn("github")}
-                className="flex justify-center h-11 text-sm items-center gap-3.5 rounded-lg border border-gray-3 bg-gray-1 p-3 ease-out duration-200 hover:text-dark hover:bg-gray-2 disabled:pointer-events-none disabled:opacity-60"
-                disabled={isLoading}
-              >
-                <GitHubIcon />
-                Sign Up with Github
-              </button>
+              {/* GitHub sign-up removed per request */}
             </div>
 
             <span className="relative z-1 block font-medium text-center mt-4.5">

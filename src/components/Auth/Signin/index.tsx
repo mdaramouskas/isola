@@ -1,5 +1,5 @@
 "use client";
-import { GitHubIcon, GoogleIcon } from "@/assets/icons/social";
+import { GoogleIcon } from "@/assets/icons/social";
 import Loader from "@/components/Common/Loader";
 import cn from "@/utils/cn";
 import { signIn, useSession } from "next-auth/react";
@@ -44,7 +44,7 @@ const Signin = () => {
   const handleQuickLogin = (role: 'user' | 'admin') => {
     const credentials = {
       user: { email: 'user@gmail.com', password: 'Isola1234' },
-      admin: { email: 'admin@gmail.com', password: 'Isola1234' }
+      admin: { email: 'daramouskasmike@gmail.com', password: 'Isola1234' }
     };
 
     setValue('email', credentials[role].email);
@@ -180,15 +180,7 @@ const Signin = () => {
                     Sign In with Google
                   </button>
 
-                  <button
-                    onClick={() => signIn("github")}
-                    type="button"
-                    className="flex justify-center items-center text-sm h-11 gap-3.5 rounded-lg border border-gray-3 bg-gray-1 p-3 ease-out duration-200 hover:text-dark hover:bg-gray-2 disabled:pointer-events-none disabled:opacity-60"
-                    disabled={isLoading}
-                  >
-                    <GitHubIcon />
-                    Sign In with Github
-                  </button>
+                  {/* GitHub sign-in removed per request */}
                 </div>
 
                 <p className="mt-6 text-sm text-center">
