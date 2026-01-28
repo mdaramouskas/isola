@@ -1,144 +1,117 @@
-import { CallIcon, EmailIcon, MapIcon } from "@/assets/icons";
+import Link from "next/link";
+import FooterBottom from "./FooterBottom";
 import {
   FacebookIcon,
   InstagramIcon,
   LinkedInIcon,
   TwitterIcon,
 } from "@/assets/icons/social";
-import Link from "next/link";
-import AccountLinks from "./AccountLinks";
-import FooterBottom from "./FooterBottom";
-import { AppStoreIcon, GooglePlayIcon } from "./icons";
-import QuickLinks from "./QuickLinks";
+
+const customerService = [
+  { id: 1, label: "Delivery and Returns", href: "/delivery-and-returns" },
+  { id: 2, label: "Privacy Policy", href: "/privacy-policy" },
+  { id: 3, label: "Order Tracking", href: "/order-tracking" },
+  { id: 4, label: "FAQ", href: "/faqs" },
+];
+
+const boutiques = [
+  { id: 1, label: "Isola Boutique (Womenswear)", href: "#" },
+  { id: 2, label: "Isola Boutique (Menswear/Unisex)", href: "#" },
+  { id: 3, label: "Isola Boutique SKG (Womenswear)", href: "#" },
+  { id: 4, label: "Pop Up Boutique OLEA All Suite Hotel", href: "#" },
+];
 
 const Footer = () => {
   return (
     <footer className="overflow-hidden border-t border-gray-3">
       <div className="px-4 mx-auto max-w-7xl sm:px-8 xl:px-0">
-        {/* <!-- footer menu start --> */}
-        <div className="flex flex-wrap xl:flex-nowrap gap-10 xl:gap-19 xl:justify-between pt-17.5 xl:pt-22.5 pb-10 xl:pb-20">
-          <div className="max-w-[330px] w-full">
-            <h2 className="mb-7.5 text-xl font-semibold text-dark">
-              Help & Support
-            </h2>
+        {/* footer menu start */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 pt-14 pb-12">
+          {/* Follow us */}
+          <div>
+            <h2 className="mb-4 text-sm font-semibold text-dark">Follow us</h2>
 
-            <ul className="flex flex-col gap-3">
-              <li className="flex gap-4.5 text-base">
-                <span className="shrink-0">
-                  <MapIcon className="fill-blue" width={24} height={24} />
-                </span>
-                685 Market Street,Las Vegas, LA 95820,United States.
-              </li>
-
+            <ul className="flex flex-col gap-3 text-sm text-dark-3">
               <li>
-                <Link
-                  href="tel:+099 532-786-9843"
-                  className="flex items-center gap-4.5 text-base"
-                >
-                  <CallIcon className="fill-blue" width={24} height={24} />
-                  (+099) 532-786-9843
+                <Link href="https://www.instagram.com/isola_boutique_men/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 duration-200 ease-out hover:text-blue">
+                  <InstagramIcon />
+                  <span>Mens/Unisex</span>
                 </Link>
               </li>
-
-              <li>
-                <Link
-                  href="mailto:support@example.com"
-                  className="flex items-center gap-4.5 text-base"
-                >
-                  <EmailIcon className="fill-blue" width={24} height={24} />
-                  support@example.com
+              <li className="flex items-center gap-3">
+                <Link href="https://www.instagram.com/isola_boutique/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 duration-200 ease-out hover:text-blue">
+                  <InstagramIcon />
+                  <span>Womens</span>
+                </Link>
+              </li>
+              <li className="flex items-center gap-3">
+                <Link href="https://www.facebook.com/IsolaBoutique/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 duration-200 ease-out hover:text-blue">
+                <FacebookIcon />
+                <span>Womens</span>
+                </Link>
+              </li>
+              <li className="flex items-center gap-3">
+                <Link href="https://www.facebook.com/isola.boutique.men/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 duration-200 ease-out hover:text-blue">
+                <FacebookIcon />
+                <span>Mens/Unisex</span>
+                </Link>
+              </li>
+              <li className="flex items-center gap-3">
+                <Link href="https://www.tiktok.com/@isola_boutique" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 duration-200 ease-out hover:text-blue">
+                <TwitterIcon />
+                <span>Isola Boutique</span>
                 </Link>
               </li>
             </ul>
-
-            {/* <!-- Social Links start --> */}
-            <div className="flex items-center gap-4 mt-7.5">
-              <Link
-                href="#"
-                className="flex duration-200 ease-out hover:text-blue"
-              >
-                <span className="sr-only">Facebook link</span>
-                <FacebookIcon />
-              </Link>
-
-              <Link
-                href="#"
-                className="flex duration-200 ease-out hover:text-blue"
-              >
-                <span className="sr-only">Twitter link</span>
-                <TwitterIcon />
-              </Link>
-
-              <Link
-                href="#"
-                className="flex duration-200 ease-out hover:text-blue"
-              >
-                <span className="sr-only">Instagram link</span>
-                <InstagramIcon />
-              </Link>
-
-              <Link
-                href="#"
-                aria-label="Linkedin Social Link"
-                className="flex duration-200 ease-out hover:text-blue"
-              >
-                <span className="sr-only">LinkedIn link</span>
-                <LinkedInIcon />
-              </Link>
-            </div>
-            {/* <!-- Social Links end --> */}
           </div>
 
-          <AccountLinks />
-
-          <QuickLinks />
-
-          <div className="w-full sm:w-auto">
-            <h2 className="mb-7.5 text-xl font-semibold text-dark lg:text-right">
-              Download App
-            </h2>
-
-            <p className="mb-4 lg:text-right text-custom-sm">
-              Get started in seconds – it&apos;s fast, free, and easy!
-            </p>
-
-            <ul className="flex flex-col gap-3 lg:items-end">
-              <li>
-                <Link
-                  className="inline-flex items-center gap-3 py-[9px] pl-4 pr-7.5 hover:bg-gray-3 text-white rounded-lg border border-gray-3  ease-out duration-200 hover:bg-opacity-95"
-                  href="#"
-                >
-                  <AppStoreIcon />
-
-                  <div>
-                    <span className="block text-custom-xs text-dark-3">
-                      Download on the
-                    </span>
-                    <p className="font-semibold text-dark">App Store</p>
-                  </div>
-                </Link>
-              </li>
-
-              <li>
-                <Link
-                  className="inline-flex items-center gap-3 py-[9px] pl-4 pr-8.5 text-white hover:bg-gray-3 rounded-lg border border-gray-3 ease-out duration-200 hover:bg-opacity-95"
-                  href="#"
-                >
-                  <GooglePlayIcon />
-
-                  <div>
-                    <span className="block text-custom-xs text-dark-3">
-                      {" "}
-                      Get in On{" "}
-                    </span>
-                    <p className="font-semibold text-dark">Google Play</p>
-                  </div>
-                </Link>
-              </li>
+          {/* Customer Service */}
+          <div>
+            <h2 className="mb-4 text-sm font-semibold text-dark">Customer Service</h2>
+            <ul className="flex flex-col gap-3 text-sm text-dark-3">
+              {customerService.map((item) => (
+                <li key={item.id}>
+                  <Link className="duration-200 ease-out hover:text-blue" href={item.href}>
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
+          </div>
+
+          {/* Boutiques */}
+          <div>
+            <h2 className="mb-4 text-sm font-semibold text-dark">Boutiques</h2>
+            <ul className="flex flex-col gap-3 text-sm text-dark-3">
+              {boutiques.map((b) => (
+                <li key={b.id}>
+                  <Link className="duration-200 ease-out hover:text-blue" href={b.href}>
+                    {b.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Newsletter */}
+          <div>
+            <h2 className="mb-4 text-sm font-semibold text-dark">Let’s get in touch</h2>
+            <p className="mb-4 text-custom-sm text-dark-3">Sign up for our newsletter and get tuned with our updates and offers!</p>
+
+            <form className="max-w-sm">
+              <label className="sr-only" htmlFor="newsletter-email">Enter your email address</label>
+              <input id="newsletter-email" name="email" type="email" placeholder="Enter your email address..." className="w-full px-4 py-3 rounded bg-white border border-gray-2 mb-3 text-sm" />
+
+              <div className="flex items-start gap-3 mb-3">
+                <input id="consent" type="checkbox" className="mt-1" />
+                <label htmlFor="consent" className="text-xs text-dark-3">I consent to Isola Boutique collecting and using my email address to send me marketing emails in accordance with the Privacy Policy.</label>
+              </div>
+
+              <button type="submit" className="bg-black text-white px-4 py-2 rounded text-sm">Subscribe</button>
+            </form>
           </div>
         </div>
-        {/* <!-- footer menu end --> */}
+        {/* footer menu end */}
       </div>
 
       <FooterBottom />

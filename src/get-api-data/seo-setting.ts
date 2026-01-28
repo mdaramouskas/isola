@@ -17,7 +17,16 @@ export const getSiteName = unstable_cache(
         siteName: true,
       },
     });
-  return siteName ? siteName.siteName : process.env.SITE_NAME ? process.env.SITE_NAME : "Isola Boutique";
+    const dbName = siteName ? siteName.siteName : null;
+    if (dbName) {
+      // sanitize known boilerplate name from DB (e.g. 'Cozy-commerce')
+      if (typeof dbName === "string" && /cozy/i.test(dbName)) {
+        return process.env.SITE_NAME ? process.env.SITE_NAME : "Isola Boutique";
+      }
+      return dbName;
+    }
+
+    return process.env.SITE_NAME ? process.env.SITE_NAME : "Isola Boutique";
   },
   ['site-name'], { tags: ['site-name'] }
 );

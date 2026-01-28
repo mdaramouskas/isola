@@ -61,6 +61,7 @@ export const authOptions: NextAuthOptions = {
           throw new Error("No user found");
         }
 
+        console.log("PASSWORD INPUT:", credentials.password);
         // check to see if passwords match
         const passwordMatch = await bcrypt.compare(
           credentials.password,

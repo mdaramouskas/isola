@@ -17,7 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: `Isola Boutique Store`,
     description: "This is a site of Isola Boutique",
-    keywords: seoSettings?.metaKeywords || "e-commerce, online store",
+    keywords: seoSettings?.metaKeywords || "Online store",
     openGraph: {
       images: seoSettings?.metaImage ? [seoSettings.metaImage] : [],
     },
