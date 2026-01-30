@@ -149,7 +149,7 @@ model Product {
   customAttributes      CustomAttribute[]
   heroBanners           HeroBanner[]
   heroSliders           HeroSlider[]
-  category              Category                @relation(fields: [categoryId], references: [id])
+  category              Category?                @relation(fields: [categoryId], references: [id])
   images                ProductImage[]
   productVariants       ProductVariant[]        @relation("ProductVariants")
   reviews               Review[]

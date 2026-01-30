@@ -15,10 +15,10 @@ const customerService = [
 ];
 
 const boutiques = [
-  { id: 1, label: "Isola Boutique (Womenswear)", href: "#" },
-  { id: 2, label: "Isola Boutique (Menswear/Unisex)", href: "#" },
-  { id: 3, label: "Isola Boutique SKG (Womenswear)", href: "#" },
-  { id: 4, label: "Pop Up Boutique OLEA All Suite Hotel", href: "#" },
+  { id: 1, label: "Isola Boutique (Womenswear)", href: "https://www.google.com/maps/place/Isola+Boutique+(Womenswear)/@37.7881662,20.8997564,933m/data=!3m2!1e3!4b1!4m6!3m5!1s0x136747bce5e21c39:0x1fc477ab8aa80f53!8m2!3d37.7881662!4d20.8997564!16s%2Fg%2F11h5tzswhp?entry=ttu&g_ep=EgoyMDI2MDEyNy4wIKXMDSoASAFQAw%3D%3D" },
+  { id: 2, label: "Isola Boutique (Menswear/Unisex)", href: "https://www.google.com/maps/place/Isola+Boutique+(Menswear%2FUnisex)/@37.7877649,20.8994908,933m/data=!3m2!1e3!4b1!4m6!3m5!1s0x136747fc0d3595d5:0xab05920b3880690c!8m2!3d37.7877649!4d20.8994908!16s%2Fg%2F11y2n63065?entry=ttu&g_ep=EgoyMDI2MDEyNy4wIKXMDSoASAFQAw%3D%3D" },
+  { id: 3, label: "Isola Boutique SKG (Womenswear)", href: "https://www.google.com/maps/place/Isola+Boutique+SKG/@40.6300957,22.9421778,896m/data=!3m2!1e3!4b1!4m16!1m9!4m8!1m0!1m6!1m2!1s0x14a8390078703b39:0xf8b2fd61f3a22e41!2sIsola+Boutique+SKG,+Proxenou+Koromila+32,+Thessaloniki+546+22!2m2!1d22.9444013!2d40.6300957!3m5!1s0x14a8390078703b39:0xf8b2fd61f3a22e41!8m2!3d40.6300957!4d22.9444013!16s%2Fg%2F11x8vmlftr?entry=ttu&g_ep=EgoyMDI2MDEyNy4wIKXMDSoASAFQAw%3D%3D" },
+  { id: 4, label: "Pop Up Boutique OLEA All Suite Hotel", href: "https://www.google.com/maps/place/Olea+All+Suite+Hotel+a+Member+of+Design+Hotels/@37.8061287,20.8695497,1866m/data=!3m1!1e3!4m9!3m8!1s0x136747d4539116bb:0x677ca979a6034566!5m2!4m1!1i2!8m2!3d37.8061245!4d20.8721246!16s%2Fg%2F11f38qq9n7?entry=ttu&g_ep=EgoyMDI2MDEyNy4wIKXMDSoASAFQAw%3D%3D" },
 ];
 
 const Footer = () => {
@@ -85,7 +85,7 @@ const Footer = () => {
             <ul className="flex flex-col gap-3 text-sm text-dark-3">
               {boutiques.map((b) => (
                 <li key={b.id}>
-                  <Link className="duration-200 ease-out hover:text-blue" href={b.href}>
+                  <Link className="duration-200 ease-out hover:text-blue" href={b.href} target="_blank" rel="noopener noreferrer">
                     {b.label}
                   </Link>
                 </li>

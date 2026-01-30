@@ -14,6 +14,7 @@
   --color-current: currentColor;
   --color-transparent: transparent;
   --color-white: #ffffff;
+  --color-black: #000000;
   --color-body: #6c6f93;
 
   --color-meta-2: #495270;
@@ -38,13 +39,13 @@
   --color-gray-7: #374151;
   --color-gray: #f3f5f6;
 
-  --color-blue: #3c50e0;
-  --color-blue-dark: #1c3fb7;
-  --color-blue-light: #5475e5;
-  --color-blue-light-2: #8099ec;
-  --color-blue-light-3: #adbcf2;
-  --color-blue-light-4: #c3cef6;
-  --color-blue-light-5: #e1e8ff;
+  --color-blue: #000000;
+  --color-blue-dark: #000000;
+  --color-blue-light: #333333;
+  --color-blue-light-2: #555555;
+  --color-blue-light-3: #777777;
+  --color-blue-light-4: #999999;
+  --color-blue-light-5: #eeeeee;
 
   --color-red-50: #fef3f2;
   --color-red-500: #d92d20;
@@ -135,7 +136,7 @@
     0px 2px 2px 0px rgba(33, 37, 41, 0.06);
   --shadow-filter: 0px 1px 0px 0px #e5e7eb;
   --shadow-list: 1px 0px 0px 0px #e5e7eb;
-  --shadow-input: inset 0 0 0 2px #3c50e0;
+  --shadow-input: inset 0 0 0 2px #000000;
 }
 
 @layer base {

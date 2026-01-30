@@ -3,20 +3,28 @@ import { prisma } from '@/lib/prismaDB';
 
 export async function GET() {
   try {
-    const brands = await prisma.additionalInformation.findMany({
+    // Brands are stored in CustomAttribute with attributeName "Brand"
+    const brandAttributes = await prisma.customAttribute.findMany({
       where: {
-        name: {
-          contains: 'brand',
+        attributeName: {
+          equals: 'Brand',
           mode: 'insensitive',
         },
       },
       select: {
-        description: true,
+        attributeValues: {
+          select: {
+            title: true,
+          },
+        },
       },
     });
 
-    // return distinct brand names
-    const distinct = Array.from(new Set(brands.map((b) => b.description))).filter(Boolean);
+    // Extract and deduplicate brand names
+    const allBrands = brandAttributes.flatMap((attr) =>
+      attr.attributeValues.map((v) => v.title)
+    );
+    const distinct = Array.from(new Set(allBrands)).filter(Boolean).sort();
 
     return NextResponse.json({ data: distinct });
   } catch (error) {

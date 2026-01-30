@@ -9,7 +9,6 @@ import {
 import { IProductByDetails } from "@/types/product";
 import RecentlyViewedItems from "@/components/ShopDetails/RecentlyViewd";
 import Newsletter from "@/components/Common/Newsletter";
-import { getReviews } from "@/get-api-data/reviews";
 import { getSiteName } from "@/get-api-data/seo-setting";
 import Breadcrumb from "@/components/Common/Breadcrumb";
 
@@ -107,8 +106,7 @@ const ProductDetails = async ({ params }: Props) => {
     (variant) => variant.isDefault
   );
 
-  const { avgRating, totalRating } = await getReviews(product.slug!);
-
+  
   await structuredAlgoliaHtmlData({
     type: "products",
     title: product?.title,
@@ -146,8 +144,6 @@ const ProductDetails = async ({ params }: Props) => {
       />
       <ShopDetails
         product={product as IProductByDetails}
-        avgRating={avgRating}
-        totalRating={totalRating}
       />
       <RecentlyViewedItems products={recentProducts} />
       <Newsletter />

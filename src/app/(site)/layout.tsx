@@ -19,7 +19,7 @@ export default async function SiteLayout({
       <>
         <Providers>
           <NextTopLoader
-            color="#3C50E0"
+            color="#000000"
             crawlSpeed={300}
             showSpinner={false}
             shadow="none"

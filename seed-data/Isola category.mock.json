@@ -1,0 +1,199 @@
+{
+  "Success": true,
+  "Records": 32,
+  "Message": null,
+  "Data": [
+    {
+      "Id": "4a8b2817-ffb2-4d15-a469-02f3b745cd2f",
+      "Code": "01",
+      "Description": "Tops & Vests",
+      "SubCategories": null
+    },
+    {
+      "Id": "8d962c66-e20f-4944-a69b-889675aed549",
+      "Code": "02",
+      "Description": "Shirts",
+      "SubCategories": null
+    },
+    {
+      "Id": "475e2add-afed-4cd6-85df-de0d66d6e6e5",
+      "Code": "03",
+      "Description": "Hoodies & Sweatshirts",
+      "SubCategories": null
+    },
+    {
+      "Id": "8a62bed6-c74d-4482-b61b-e5316af5cd50",
+      "Code": "04",
+      "Description": "Coats & Jackets",
+      "SubCategories": null
+    },
+    {
+      "Id": "d7c6ad50-162c-417a-9ab1-1508e782fdc0",
+      "Code": "05",
+      "Description": "Bottoms",
+      "SubCategories": null
+    },
+    {
+      "Id": "f5d54f76-b862-4349-a620-408905aea140",
+      "Code": "06",
+      "Description": "Caps & Hats",
+      "SubCategories": null
+    },
+    {
+      "Id": "ada7dc08-b2e3-46bb-8e22-cf130e4204e0",
+      "Code": "07",
+      "Description": "Blazers",
+      "SubCategories": null
+    },
+    {
+      "Id": "21bb187a-8a24-45ba-85c2-06a351fdb32a",
+      "Code": "08",
+      "Description": "Bags & Luggages",
+      "SubCategories": null
+    },
+    {
+      "Id": "b9033c69-c073-414a-ad24-1535392ce9c5",
+      "Code": "09",
+      "Description": "Dresses",
+      "SubCategories": null
+    },
+    {
+      "Id": "57e3570d-9dab-4c8e-998a-4bda1172bcb8",
+      "Code": "10",
+      "Description": "Suits",
+      "SubCategories": null
+    },
+    {
+      "Id": "2ab2a10d-21e9-4ede-a511-cbaf146b6a5f",
+      "Code": "11",
+      "Description": "Shorts",
+      "SubCategories": null
+    },
+    {
+      "Id": "370193eb-b035-4f74-9c68-638ed19e1748",
+      "Code": "12",
+      "Description": "Socks",
+      "SubCategories": null
+    },
+    {
+      "Id": "d8a7f20e-05cd-45d7-8b20-4c0fcb38d343",
+      "Code": "13",
+      "Description": "Knitwear",
+      "SubCategories": null
+    },
+    {
+      "Id": "1eeeea0b-8a7c-4900-af29-f81ad39fb364",
+      "Code": "14",
+      "Description": "Towels",
+      "SubCategories": null
+    },
+    {
+      "Id": "f26d23f3-c291-4994-a98b-483a90bda640",
+      "Code": "15",
+      "Description": "Wallets",
+      "SubCategories": null
+    },
+    {
+      "Id": "810c8679-62c9-4dd0-95f7-560e278d4633",
+      "Code": "16",
+      "Description": "Bodysuit",
+      "SubCategories": null
+    },
+    {
+      "Id": "f8e01da4-1df3-4347-8992-dd4a6a854164",
+      "Code": "17",
+      "Description": "Trousers & Chinos",
+      "SubCategories": null
+    },
+    {
+      "Id": "184c0199-0c18-46a4-bb09-6fec650113a8",
+      "Code": "18",
+      "Description": "T-Shirts & Vests",
+      "SubCategories": null
+    },
+    {
+      "Id": "85bfffd0-d720-48ac-a6e9-6e0bdf104d42",
+      "Code": "19",
+      "Description": "Skirts",
+      "SubCategories": null
+    },
+    {
+      "Id": "6a70c452-9143-41a2-b3ff-e742ec984ac0",
+      "Code": "20",
+      "Description": "Scarfs",
+      "SubCategories": null
+    },
+    {
+      "Id": "79059418-49d1-48d7-9a66-01f1d1d324af",
+      "Code": "21",
+      "Description": "Gloves",
+      "SubCategories": null
+    },
+    {
+      "Id": "6f6e34f2-560b-4e03-a47c-557f75bb3f16",
+      "Code": "22",
+      "Description": "Footwear",
+      "SubCategories": null
+    },
+    {
+      "Id": "a1a704d6-2ba1-44bc-b54e-56cede4babc6",
+      "Code": "23",
+      "Description": "Cardigans",
+      "SubCategories": null
+    },
+    {
+      "Id": "d10b78be-d6d5-4cb4-a0dc-840350564e2a",
+      "Code": "24",
+      "Description": "Jackets & Coats",
+      "SubCategories": null
+    },
+    {
+      "Id": "a4718c45-202c-4c6a-a96b-0c04556d81f5",
+      "Code": "25",
+      "Description": "Denim",
+      "SubCategories": null
+    },
+    {
+      "Id": "c3b16c2d-ca72-4824-8a10-e5da567d3a36",
+      "Code": "26",
+      "Description": "Jewellery",
+      "SubCategories": null
+    },
+    {
+      "Id": "018c6616-16c0-4976-9744-e05a47876858",
+      "Code": "27",
+      "Description": "Hair accessories",
+      "SubCategories": null
+    },
+    {
+      "Id": "8fce08c2-37a3-4eb7-82bb-e4c6faf61b74",
+      "Code": "28",
+      "Description": "Underwear",
+      "SubCategories": null
+    },
+    {
+      "Id": "691671f3-a91d-4dfd-ac09-b362f3ce9662",
+      "Code": "29",
+      "Description": "Swimwear & Beachwear",
+      "SubCategories": null
+    },
+    {
+      "Id": "a7921f8b-f8f6-4f1e-8395-6e480fdfc0ee",
+      "Code": "30",
+      "Description": "Sunglasses",
+      "SubCategories": null
+    },
+    {
+      "Id": "56e52523-389f-47ec-9361-b37a075a1caf",
+      "Code": "31",
+      "Description": "Gift Cards",
+      "SubCategories": null
+    },
+    {
+      "Id": "13798a0b-05ae-4513-a4bc-9b4299f4bf6a",
+      "Code": "32",
+      "Description": "Belts",
+      "SubCategories": null
+    }
+  ]
+}

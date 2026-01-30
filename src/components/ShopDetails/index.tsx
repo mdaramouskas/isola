@@ -16,7 +16,6 @@ import { useDispatch } from "react-redux";
 import { useCart } from "@/hooks/useCart";
 
 import PreLoader from "../Common/PreLoader";
-import ReviewStar from "../Shop/ReviewStar";
 import DetailsTabs from "./DetailsTabs";
 import toast from "react-hot-toast";
 import { formatPrice } from "@/utils/formatePrice";
@@ -29,11 +28,9 @@ type SelectedAttributesType = {
 
 type IProps = {
   product: IProductByDetails;
-  avgRating: number;
-  totalRating: number;
 };
 
-const ShopDetails = ({ product, avgRating, totalRating }: IProps) => {
+const ShopDetails = ({ product }: IProps) => {
   const defaultVariant = product?.productVariants?.find(
     (variant) => variant.isDefault
   );
@@ -254,13 +251,6 @@ const ShopDetails = ({ product, avgRating, totalRating }: IProps) => {
                   </div>
 
                   <div className="flex flex-wrap items-center gap-5.5 mb-4.5">
-                    <div className="flex items-center gap-2.5">
-                      {/* <!-- stars --> */}
-                      <ReviewStar avgRating={avgRating} />
-
-                      <span> ( {totalRating} customer reviews ) </span>
-                    </div>
-
                     <div className="flex items-center gap-1.5">
                       {product.quantity ? (
                         <>
@@ -296,7 +286,7 @@ const ShopDetails = ({ product, avgRating, totalRating }: IProps) => {
                         key={key}
                         className="flex items-center gap-2.5 font-normal"
                       >
-                        <CircleCheckIcon className="fill-[#3C50E0]" />
+                        <CircleCheckIcon className="fill-[#000000]" />
                         {offer}
                       </li>
                     ))}
@@ -313,16 +303,12 @@ const ShopDetails = ({ product, avgRating, totalRating }: IProps) => {
                         </div>
 
                         <ul className="flex items-center gap-2.5">
-                          {product?.productVariants?.map((item, key) => (
+                          {[...new Map(product?.productVariants?.map(v => [v.color, v])).values()].map((item, key) => (
                             <li
                               key={key}
                               onClick={() => {
                                 setActiveColor(item.color);
-                                setPreviewImg(
-                                  product.productVariants.find(
-                                    (pv) => pv.color === item.color
-                                  )?.image || ""
-                                );
+                                setPreviewImg(item.image || "");
                               }}
                               className={`w-[22px] cursor-pointer h-[22px] rounded-full inline-flex items-center justify-center ${item.color === "white" ||
                                   item.color === "#ffffff"
@@ -402,17 +388,17 @@ const ShopDetails = ({ product, avgRating, totalRating }: IProps) => {
                               </h4>
                             </div>
                             <div className="flex items-center gap-4">
-                              {product?.productVariants.map(
-                                (value, valueIndex) => (
+                              {[...new Set(product?.productVariants.map(v => v.size).filter(Boolean))].map(
+                                (size, sizeIndex) => (
                                   <span
-                                    key={valueIndex}
-                                    onClick={() => setActiveSize(value.size)}
-                                    className={`border py-1 px-2.5 rounded-md text-sm font-normal cursor-pointer ${activeSize === value.size
+                                    key={sizeIndex}
+                                    onClick={() => setActiveSize(size)}
+                                    className={`border py-1 px-2.5 rounded-md text-sm font-normal cursor-pointer ${activeSize === size
                                         ? "border-blue text-blue"
                                         : "border-gray-3 text-dark-3"
                                       }`}
                                   >
-                                    {value.size}
+                                    {size}
                                   </span>
                                 )
                               )}

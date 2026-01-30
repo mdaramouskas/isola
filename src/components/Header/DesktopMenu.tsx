@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import type { MenuItem } from "./types";
 import { usePathname } from "next/navigation";
+import { accessoryCategories, excludedFromShopByProduct } from "./menuData";
 
 interface DesktopMenuProps {
   menuData: MenuItem[];
@@ -36,6 +37,18 @@ const DesktopMenu = ({ menuData, stickyMenu }: DesktopMenuProps) => {
     fetchData();
   }, []);
 
+  // Filter categories for Shop by Product (exclude accessories, footwear, gift cards)
+  const productCategories = useMemo(() =>
+    categories.filter(c => !excludedFromShopByProduct.includes(c.title.toLowerCase())),
+    [categories]
+  );
+
+  // Filter categories for Accessories dropdown
+  const accessoryCats = useMemo(() =>
+    categories.filter(c => accessoryCategories.includes(c.title.toLowerCase())),
+    [categories]
+  );
+
   const handleMouseEnter = (index: number) => {
     setActiveDropdown(index);
   };
@@ -54,7 +67,7 @@ const DesktopMenu = ({ menuData, stickyMenu }: DesktopMenuProps) => {
             onMouseEnter={() => handleMouseEnter(i)}
             onMouseLeave={handleMouseLeave}
           >
-            {menuItem.submenu || menuItem.title === 'Shop by Product' || menuItem.title === 'Shop By Brand' ? (
+            {menuItem.submenu || menuItem.title === 'Shop by Product' || menuItem.title === 'Shop By Brand' || menuItem.title === 'Accessories' ? (
               <>
                 <button
                   className={`flex items-center gap-1 hover:text-blue font-medium ${stickyMenu ? "py-4" : "py-6"} relative text-sm font-medium ${menuItem.submenu?.some(subItem => pathname === subItem.path) ? "text-blue" : "text-dark"}`}
@@ -62,6 +75,8 @@ const DesktopMenu = ({ menuData, stickyMenu }: DesktopMenuProps) => {
                     // top-level click should navigate to the shop page so sidebar/filters are available
                     if (menuItem.title === 'Shop by Product' || menuItem.title === 'Shop By Brand') {
                       router.push('/shop');
+                    } else if (menuItem.title === 'Accessories') {
+                      router.push('/shop?category=accessories');
                     }
                   }}
                 >
@@ -94,7 +109,7 @@ const DesktopMenu = ({ menuData, stickyMenu }: DesktopMenuProps) => {
                     <div className="grid grid-cols-2 gap-4">
                       <div>
                         <p className="font-semibold mb-2">Men</p>
-                        {categories.map((c) => (
+                        {productCategories.map((c) => (
                           <Link key={c.id} href={`/categories/${c.slug}?gender=men`} className="block px-2 py-1 text-sm hover:text-blue hover:bg-gray-2 rounded">
                             {c.title}
                           </Link>
@@ -102,7 +117,7 @@ const DesktopMenu = ({ menuData, stickyMenu }: DesktopMenuProps) => {
                       </div>
                       <div>
                         <p className="font-semibold mb-2">Women</p>
-                        {categories.map((c) => (
+                        {productCategories.map((c) => (
                           <Link key={c.id} href={`/categories/${c.slug}?gender=women`} className="block px-2 py-1 text-sm hover:text-blue hover:bg-gray-2 rounded">
                             {c.title}
                           </Link>
@@ -124,6 +139,25 @@ const DesktopMenu = ({ menuData, stickyMenu }: DesktopMenuProps) => {
                         {brands.map((b, idx) => (
                           <Link key={idx} href={`/shop?brand=${encodeURIComponent(b)}&gender=women`} className="block px-2 py-1 text-sm hover:text-blue hover:bg-gray-2 rounded">
                             {b}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  ) : menuItem.title === 'Accessories' ? (
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <p className="font-semibold mb-2">Men</p>
+                        {accessoryCats.map((c) => (
+                          <Link key={c.id} href={`/categories/${c.slug}?gender=men`} className="block px-2 py-1 text-sm hover:text-blue hover:bg-gray-2 rounded">
+                            {c.title}
+                          </Link>
+                        ))}
+                      </div>
+                      <div>
+                        <p className="font-semibold mb-2">Women</p>
+                        {accessoryCats.map((c) => (
+                          <Link key={c.id} href={`/categories/${c.slug}?gender=women`} className="block px-2 py-1 text-sm hover:text-blue hover:bg-gray-2 rounded">
+                            {c.title}
                           </Link>
                         ))}
                       </div>

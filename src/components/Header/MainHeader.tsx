@@ -75,7 +75,7 @@ const MainHeader = ({ headerData }: IProps) => {
           }`}
       >
         {/* Topbar */}
-        <div className="bg-dark py-2.5">
+        <div className="bg-black py-2.5">
           <div className="px-4 mx-auto max-w-7xl sm:px-6 xl:px-0">
             <div className="flex justify-between">
               <div className="hidden lg:block">
